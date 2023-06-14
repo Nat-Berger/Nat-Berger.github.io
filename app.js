@@ -33,7 +33,7 @@ function addTodo(event) {
   todoDiv.appendChild(completedButton);
   //delete button
   const deleteButton = document.createElement('button');
-  deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
+  deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>'; //styling bin item
   deleteButton.classList.add("delete-btn");
   todoDiv.appendChild(deleteButton);
   //append todo
@@ -53,47 +53,7 @@ function deleteCheck(e) {
   if (item.classList[0] === "complete-btn") {
     const todo = item.parentElement;
     todo.classList.toggle("completed");
-    if (localStorage.getItem('completed') === null){
-      localStorage.setItem('completed', JSON.stringify(todo));
-      let completed = JSON.parse(localStorage.getItem('completed')); //what if theres none? 
-      console.log(completed);
-
-
-      //WHAT THE FUCK AM I DOING?
-
-
-    }
-    if (completed.includes(todo)){ 
-      const completedIndex = todo.children[0].innerText;
-      console.log(completedIndex);
-      completed.splice(completed.indexOf(completedIndex), 1);
-      localStorage.setItem("todos", JSON.stringify(todos));
-    }else{
-      localStorage.setItem('completed', JSON.stringify(todo));
-    }
-  
-    //update local storage to include the attribute of 'completed'
-
-
-    const checked = todo.children[0].innerText; //gives me item name
-    let item_in_storage = localStorage.getItem('completed');
-    if (item_in_storage.includes(checked)){
-      console.log('It include' + checked);
-    }
-    else{
-      saveLocalCompletedTodos(checked);
-    }
-     //saving as object
-    // //const completed = localStorage.getItem('completed');
-    // let completed = ["item1", "item2"];
-    // console.log(completed);
-
-    // if (completed.includes((checked)) === true){
-    //   console.log("I am this item: " + checked);
-    // }
-    // else{
-    //   saveLocalCompletedTodos(checked);
-    // }
+    saveLocalCompletedTodos(todo.innerText);
   }
 }
 
@@ -134,28 +94,46 @@ function saveLocalTodos(todo) {
   localStorage.setItem('todos', JSON.stringify(todos));
 }
 
-function saveLocalCompletedTodos(todo){
-  let todos;
+
+function saveLocalCompletedTodos(todoText) {
+  let completed;
+  
   if (localStorage.getItem('completed') === null) {
-    todos = [];
+    completed = [];
   } else {
-    todos = JSON.parse(localStorage.getItem('completed'));
+    completed = JSON.parse(localStorage.getItem('completed'));
   }
-  todos.push(todo);
-  localStorage.setItem('completed', JSON.stringify(todos));
+  const index = completed.indexOf(todoText);
+  if (index !== -1) {
+    completed.splice(index, 1);
+  } else {
+    completed.push(todoText);
+  }
+  localStorage.setItem('completed', JSON.stringify(completed));
 }
-function removeLocalCompletedTodos(todo)
-{
-  localStorage.getItem(todo)
-  console.log('Unchecked');
-}
+
+/*
+  When clicking the save todos: I want to be able to:
+  1. Add the saved item to the Completed list in local storage 
+
+  When unchecking the completed list, needs to be removed from the 'completed' list.
+  
+  When refreshing the page, the 'get todos' function must return all, 
+  but then we need a new function to set styling based off the list shown (completed list)
+
+   
+
+
+*/
+
 function getTodos() {
-  let todo;
+  let todos;
   if (localStorage.getItem('todos') === null) {
     todos = [];
   } else {
     todos = JSON.parse(localStorage.getItem('todos'));
   }
+
   todos.forEach(function (todo) {
     const todoDiv = document.createElement('div');
     todoDiv.classList.add("todo");
@@ -177,6 +155,7 @@ function getTodos() {
     todoDiv.appendChild(deleteButton);
     //append todo
     todoList.appendChild(todoDiv);
+   
   })
 }
 function removeLocalTodos(todo){
