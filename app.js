@@ -51,12 +51,28 @@ function deleteCheck(e) {
       todo.remove();
     });
   }
-  if (item.classList[0] === "complete-btn") {
+  if (item.classList[0] === "complete-btn") {  
+     if (checkValueInLocalStorage(item.parentElement.innerText) === true){
+      console.log('it exists in here');
+     }
+      // add logic if the item already exists, then delete and add to the todos list
     const todo = item.parentElement;
     todo.classList.toggle("completed");
     saveLocalCompletedTodos(todo.innerText);
     removeLocalTodos(todo);
+     
+    // get list of items
+  
+
+    // comapare to see if inner text matches
+    // if matches, then remove and add to the todos
+    // if doesn't match, then mark complete?
+    // something wrong with my splice? 
   }
+}
+function checkValueInLocalStorage(value) {
+  const item = JSON.parse(localStorage.getItem('completed'));
+  return item && item.hasOwnProperty(value);
 }
 
 function filterTodo() {
@@ -104,6 +120,7 @@ function saveLocalCompletedTodos(todoText) {
   } else {
     completed = JSON.parse(localStorage.getItem('completed'));
   }
+  completed = JSON.parse(localStorage.getItem('completed'));
   const index = completed.indexOf(todoText);
   if (index !== -1) {
     completed.splice(index, 1);
