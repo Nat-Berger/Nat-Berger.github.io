@@ -51,29 +51,21 @@ function deleteCheck(e) {
       todo.remove();
     });
   }
-  if (item.classList[0] === "complete-btn") {  
-     if (checkValueInLocalStorage(item.parentElement.innerText) === true){
-      console.log('it exists in here');
-     }
-      // add logic if the item already exists, then delete and add to the todos list
+  else if (item.classList[0] === "complete-btn") {
     const todo = item.parentElement;
-    todo.classList.toggle("completed");
-    saveLocalCompletedTodos(todo.innerText);
-    removeLocalTodos(todo);
-     
-    // get list of items
-  
-
-    // comapare to see if inner text matches
-    // if matches, then remove and add to the todos
-    // if doesn't match, then mark complete?
-    // something wrong with my splice? 
-  }
-}
-function checkValueInLocalStorage(value) {
-  const item = JSON.parse(localStorage.getItem('completed'));
-  return item && item.hasOwnProperty(value);
-}
+    if (item.parentElement.classList.value === "todo completed") {
+      console.log('we are completed');
+      saveLocalTodos(todo.innerText);
+      removeLocalCompletedTodos(todo.innerText);
+      todo.classList.toggle("todo");
+    }
+    else{
+      console.log('we are NOT completed');
+      todo.classList.toggle("completed");
+      saveLocalCompletedTodos(todo);
+      removeLocalCompletedTodos(todo);
+    }
+  }}
 
 function filterTodo() {
   const todos = document.querySelectorAll('.todo');
@@ -114,7 +106,6 @@ function saveLocalTodos(todo) {
 
 function saveLocalCompletedTodos(todoText) {
   let completed;
-
   if (localStorage.getItem('completed') === null) {
     completed = [];
   } else {
@@ -138,19 +129,17 @@ function saveLocalCompletedTodos(todoText) {
   
   When refreshing the page, the 'get todos' function must return all, 
   but then we need a new function to set styling based off the list shown (completed list)   DONE
-
-
 */
 
 function getTodos() {
   let todos;
-  let completed;
+  
   if (localStorage.getItem('todos') === null) {
-    todos = [];
-    console.log('todos is empty');
+    todos = []; 
   }
   else {
     const completed = JSON.parse(localStorage.getItem('completed'));
+    console.log(completed);
     completed.forEach(function (todo) {
       const todoDiv = document.createElement('div');
       todoDiv.classList.add("todo");
@@ -196,7 +185,7 @@ function getTodos() {
       todoDiv.appendChild(deleteButton);
       //append todo
       todoList.appendChild(todoDiv);
-      console.log('Successfully added all of the items');
+      
     })
   }
 }
