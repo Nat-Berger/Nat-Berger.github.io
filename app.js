@@ -51,7 +51,7 @@ function deleteCheck(e) {
   if (item.classList[0] === "complete-btn") {
     const todo = item.parentElement;
     todo.classList.toggle("completed");
-    saveCompleted(todo);
+    saveLocalCompleted(todo);
   }
 }
 
@@ -79,36 +79,21 @@ function filterTodo() {
     }
   });
 }
-function saveCompleted(todo) {
-  const todos = JSON.parse(localStorage.getItem('todos')); //get todos
-  const completed = JSON.parse(localStorage.getItem('completed')); //get completed
-  console.log("this is completed: " + completed);
-  todos.forEach((item) => {
-    if (Object.values(completed).includes(item) === true){
-      //we want to remove this 
-      let index = completed.indexOf(item);
-      completed.splice(index, 1);
-    }
-    else{
-      console.log(`The item: ${item} is not in completed`);
-      completed.push(completed);
-      localStorage.setItem('completed', JSON.stringify(completed));
-    }
-  })
-    
-    //check item exists in 'completed' array
-    // if exists remove it using splice (so we need index)
-    // if not exist, then add it to the completed array
-  
-
-  //let completed;
-  // if (localStorage.getItem('completed') === null){
-  //   completed = [];
-  // } else {
-  //   completed = JSON.parse(localStorage.getItem('completed'));
-  // }
-  // completed.push(todo);
-  // localStorage.setItem('completed', JSON.stringify(completed));
+function saveLocalCompleted(todo) {
+  let completed = JSON.parse(localStorage.getItem('completed'));
+  if (completed === null){
+    completed = [];
+    completed.push(todo.innerText);
+    localStorage.setItem('completed', JSON.stringify(completed));
+  }
+  else if (completed.includes(todo.innerText) === true) {
+    let index = completed.indexOf(todo.innerText,0);
+    completed.splice(index, 1);
+    localStorage.setItem('completed', JSON.stringify(completed))
+  } else {
+    completed.push(todo.innerText);
+    localStorage.setItem('completed', JSON.stringify(completed));
+  }
 }
 
 function saveLocalTodos(todo) {
@@ -127,10 +112,10 @@ function saveLocalTodos(todo) {
   When clicking the save todos: I want to be able to:
   1. Add the saved item to the Completed list in local storage      DONE
 
-  When unchecking the completed list, needs to be removed from the 'completed' list but put back into the todos!.    PENDING
+  When unchecking the completed list, needs to be removed from the 'completed' list but put back into the todos!.  DONE
   
   When refreshing the page, the 'get todos' function must return all, 
-  but then we need a new function to set styling based off the list shown (completed list)   DONE
+  but then we need a new function to set styling based off the list shown (completed list)   PENDING
 
 
 */
@@ -161,7 +146,6 @@ function getTodos() {
       todoDiv.appendChild(deleteButton);
       //append todo
       todoList.appendChild(todoDiv);
-
     })
     console.log('Successfully added all of the items');
   }
