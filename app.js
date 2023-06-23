@@ -44,6 +44,7 @@ function deleteCheck(e) {
     const todo = item.parentElement;
     todo.classList.add("fall");
     removeLocalTodos(todo);
+    removeLocalCompleted(todo);
     todo.addEventListener("transitionend", function () {
       todo.remove();
     });
@@ -109,21 +110,16 @@ function saveLocalTodos(todo) {
 }
 
 /*
-  When clicking the save todos: I want to be able to:
   1. Add the saved item to the Completed list in local storage      DONE
-
-  When unchecking the completed list, needs to be removed from the 'completed' list but put back into the todos!.  DONE
-  
-  When refreshing the page, the 'get todos' function must return all, 
-  but then we need a new function to set styling based off the list shown (completed list)   PENDING
-
-
+  2. When unchecking the completed list, needs to be removed from the 'completed' list but put back into the todos!.  DONE
+  3. getTodos must return both non-complete & completed todos and style them accordingly   DONE
 */
 function getTodos() {
   if (localStorage.getItem('todos') === null) {
     todos = [];
   }
   else {
+    const completed = JSON.parse(localStorage.getItem('completed'));
     const todos = JSON.parse(localStorage.getItem('todos'));
     todos.forEach(function (todo) {
       const todoDiv = document.createElement('div');
@@ -133,7 +129,6 @@ function getTodos() {
       newTodo.innerText = todo;
       newTodo.classList.add('todo-item');
       todoDiv.appendChild(newTodo);
-
       //check button
       const completedButton = document.createElement('button');
       completedButton.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
@@ -146,8 +141,10 @@ function getTodos() {
       todoDiv.appendChild(deleteButton);
       //append todo
       todoList.appendChild(todoDiv);
+      if (completed.includes(todo)){
+        todoDiv.classList.toggle("completed");
+      }
     })
-    console.log('Successfully added all of the items');
   }
 }
 
@@ -161,4 +158,15 @@ function removeLocalTodos(todo) {
   const todoIndex = todo.children[0].innerText;
   todos.splice(todos.indexOf(todoIndex), 1);
   localStorage.setItem("todos", JSON.stringify(todos));
+}
+function removeLocalCompleted(todo){
+  let completed;
+  if (localStorage.getItem('completed') === null) {
+    completed = [];
+  } else {
+    completed = JSON.parse(localStorage.getItem('completed'));
+  }
+  const todoIndex = todo.children[0].innerText;
+  completed.splice(completed.indexOf(todoIndex), 1);
+  localStorage.setItem('completed', JSON.stringify(completed));
 }
