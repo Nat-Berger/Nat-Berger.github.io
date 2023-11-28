@@ -15,28 +15,31 @@ document.addEventListener('DOMContentLoaded', getTodos);
 function addTodo(event) {
   event.preventDefault(); //stops the page refreshing
   //idea is to create a div, with a checked & delete button added but auto add on click
-  const todoDiv = document.createElement('div');
-  todoDiv.classList.add("todo");
-  //create list
-  const newTodo = document.createElement('li');
-  newTodo.innerText = todoInput.value;
-  newTodo.classList.add('todo-item');
-  todoDiv.appendChild(newTodo);
-  //Add to local storage
-  saveLocalTodos(todoInput.value);
-  //check button
-  const completedButton = document.createElement('button');
-  completedButton.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
-  completedButton.classList.add("complete-btn");
-  todoDiv.appendChild(completedButton);
-  //delete button
-  const deleteButton = document.createElement('button');
-  deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>'; //styling bin item
-  deleteButton.classList.add("delete-btn");
-  todoDiv.appendChild(deleteButton);
-  //append todo
-  todoList.appendChild(todoDiv);
-  todoInput.value = '';
+  if (!todoInput.value == "") {
+    const todoDiv = document.createElement('div');
+    todoDiv.classList.add("todo");
+    //create list
+    const newTodo = document.createElement('li');
+    newTodo.innerText = todoInput.value;
+    newTodo.classList.add('todo-item');
+    todoDiv.appendChild(newTodo);
+    //Add to local storage
+    saveLocalTodos(todoInput.value);
+    //check button
+    const completedButton = document.createElement('button');
+    completedButton.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+    completedButton.classList.add("complete-btn");
+    todoDiv.appendChild(completedButton);
+    //delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>'; //styling bin item
+    deleteButton.classList.add("delete-btn");
+    todoDiv.appendChild(deleteButton);
+    //append todo
+    todoList.appendChild(todoDiv);
+    todoInput.value = '';
+  }
+
 }
 function deleteCheck(e) {
   const item = e.target;
@@ -82,13 +85,13 @@ function filterTodo() {
 }
 function saveLocalCompleted(todo) {
   let completed = JSON.parse(localStorage.getItem('completed'));
-  if (completed === null){
+  if (completed === null) {
     completed = [];
     completed.push(todo.innerText);
     localStorage.setItem('completed', JSON.stringify(completed));
   }
   else if (completed.includes(todo.innerText) === true) {
-    let index = completed.indexOf(todo.innerText,0);
+    let index = completed.indexOf(todo.innerText, 0);
     completed.splice(index, 1);
     localStorage.setItem('completed', JSON.stringify(completed))
   } else {
@@ -141,7 +144,7 @@ function getTodos() {
       todoDiv.appendChild(deleteButton);
       //append todo
       todoList.appendChild(todoDiv);
-      if (completed.includes(todo)){
+      if (completed.includes(todo)) {
         todoDiv.classList.toggle("completed");
       }
     })
@@ -159,7 +162,7 @@ function removeLocalTodos(todo) {
   todos.splice(todos.indexOf(todoIndex), 1);
   localStorage.setItem("todos", JSON.stringify(todos));
 }
-function removeLocalCompleted(todo){
+function removeLocalCompleted(todo) {
   let completed;
   if (localStorage.getItem('completed') === null) {
     completed = [];
