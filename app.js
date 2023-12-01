@@ -36,7 +36,7 @@ function addTodo(event) {
     deleteButton.classList.add("delete-btn");
     todoDiv.appendChild(deleteButton);
     //append todo
-    todoList.appendChild(todoDiv);
+    todoList.insertBefore(todoDiv, todoList.childNodes[0]);
     todoInput.value = '';
   }
 
