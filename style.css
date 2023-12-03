@@ -138,3 +138,10 @@ form button:hover {
     justify-content: center;
     display: flex;
 }
+#validationMessage{
+    color: red;
+    font-size: 20px;
+    max-height: 30px;
+    display: grid;
+    margin-top: 100px;
+}

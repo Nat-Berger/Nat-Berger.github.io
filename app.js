@@ -4,7 +4,8 @@ const todoButton = document.querySelector('.todo-button');
 const todoList = document.querySelector('.todo-list');
 const filterOption = document.querySelector('.filter-todo');
 //Event Listeners
-
+//todoInput.addEventListener('input', checkInputLength);   //// I wanna limit charactesr to 10, then show live validation
+// on the length so that if they hit 11, it shows, when it hits 10, it hits it again. 
 todoButton.addEventListener("click", addTodo);
 todoList.addEventListener("click", deleteCheck);
 filterOption.addEventListener("change", filterTodo);
@@ -16,6 +17,7 @@ function addTodo(event) {
   event.preventDefault(); //stops the page refreshing
   //idea is to create a div, with a checked & delete button added but auto add on click
   if (!todoInput.value == "") {
+    //checkInputLength();
     const todoDiv = document.createElement('div');
     todoDiv.classList.add("todo");
     //create list
@@ -41,6 +43,16 @@ function addTodo(event) {
   }
 
 }
+function checkInputLength() {
+  let errorMessage = document.getElementById('validationMessage');
+  if (todoInput.value.length > 10 || todoInput.value.length < 1) {
+    errorMessage.innerHTML = 'Please enter 1 - 100 characters';
+  }
+}
+
+
+
+
 function deleteCheck(e) {
   const item = e.target;
   if (item.classList[0] === "delete-btn") {
@@ -112,11 +124,6 @@ function saveLocalTodos(todo) {
   localStorage.setItem('todos', JSON.stringify(todos));
 }
 
-/*
-  1. Add the saved item to the Completed list in local storage      DONE
-  2. When unchecking the completed list, needs to be removed from the 'completed' list but put back into the todos!.  DONE
-  3. getTodos must return both non-complete & completed todos and style them accordingly   DONE
-*/
 function getTodos() {
   if (localStorage.getItem('todos') === null) {
     todos = [];
@@ -143,7 +150,7 @@ function getTodos() {
       deleteButton.classList.add("delete-btn");
       todoDiv.appendChild(deleteButton);
       //append todo
-      todoList.appendChild(todoDiv);
+      todoList.insertBefore(todoDiv, todoList.childNodes[0]);
       if (completed.includes(todo)) {
         todoDiv.classList.toggle("completed");
       }
