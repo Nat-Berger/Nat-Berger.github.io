@@ -3,9 +3,10 @@ const todoInput = document.querySelector('.todo-input');
 const todoButton = document.querySelector('.todo-button');
 const todoList = document.querySelector('.todo-list');
 const filterOption = document.querySelector('.filter-todo');
+const settingsButton = document.querySelector('.background-selector')
+
 //Event Listeners
-//todoInput.addEventListener('input', checkInputLength);   //// I wanna limit charactesr to 10, then show live validation
-// on the length so that if they hit 11, it shows, when it hits 10, it hits it again. 
+
 todoButton.addEventListener("click", addTodo);
 todoList.addEventListener("click", deleteCheck);
 filterOption.addEventListener("change", filterTodo);
@@ -16,8 +17,8 @@ document.addEventListener('DOMContentLoaded', getTodos);
 function addTodo(event) {
   event.preventDefault(); //stops the page refreshing
   //idea is to create a div, with a checked & delete button added but auto add on click
-  if (!todoInput.value == "") {
-    //checkInputLength();
+
+  if (todoInput.value !== "" && todoInput.value !== null && todoInput.value.trim() !== '') {
     const todoDiv = document.createElement('div');
     todoDiv.classList.add("todo");
     //create list
@@ -43,15 +44,6 @@ function addTodo(event) {
   }
 
 }
-function checkInputLength() {
-  let errorMessage = document.getElementById('validationMessage');
-  if (todoInput.value.length > 10 || todoInput.value.length < 1) {
-    errorMessage.innerHTML = 'Please enter 1 - 100 characters';
-  }
-}
-
-
-
 
 function deleteCheck(e) {
   const item = e.target;
@@ -179,4 +171,36 @@ function removeLocalCompleted(todo) {
   const todoIndex = todo.children[0].innerText;
   completed.splice(completed.indexOf(todoIndex), 1);
   localStorage.setItem('completed', JSON.stringify(completed));
+}
+
+function toggleSettings(){
+  if (settingsButton.style.visibility === "hidden"){
+    settingsButton.style.visibility = "visible";
+  }else {
+    settingsButton.style.visibility = "hidden";
+  }
+}
+
+function setBackground(number){
+  const body = document.body;
+  switch (number){
+    case 1:
+      body.style.backgroundColor = 'pink';
+      break;
+    case 2:
+      body.style.backgroundColor = 'blue';
+      break;
+    case 3:
+      body.style.backgroundColor = 'red';
+      break;
+    case 4:
+      body.style.backgroundColor = 'yellow';
+      break;
+    case 5:
+      body.style.backgroundImage = url("https://wallpaperaccess.com/full/4225217.jpg")
+      default:
+    console.log('failed switch');
+
+    /// trying to   change background to hex normal? Maybe lets try
+  } 
 }
