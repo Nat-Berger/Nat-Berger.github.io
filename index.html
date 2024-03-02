@@ -6,24 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./style.css">
-    <title>To Do List</title>
+    <title class="title">To Do List</title>
     <div class="settings"> 
         <button class="settings-button" onclick="toggleSettings()">
             <i class="fa-solid fa-gear"></i>
         </button>
     </div>
 </head>
+<div class="background-selector" >
+    <p class="bg1" onclick="setBackground(1)">Pink</p>
+    <p class="bg2" onclick="setBackground(2)">Grey</p>
+    <p class="bg3" onclick="setBackground(3)">Orange</p>
+    <p class="bg4" onclick="setBackground(4)">Yellow</p>
+    <p class="reset" onclick="setBackground(5)">Reset</p>   
+</div>
 <body>
-    <div class="background-selector" >
-        <p class="bg1" onclick="setBackground(1)">Background 1</p>
-        <p class="bg2" onclick="setBackground(2)">Background 2</p>
-        <p class="bg3" onclick="setBackground(3)">Background 3</p>
-        <p class="bg4" onclick="setBackground(4)">Background 4</p>
-        <p class="reset" onclick="setBackground(5)">Reset</p>   
-    </div>
+    
 
     <header>
         <h1>My To Do List </h1>
+        
     </header>
     <form>
         <input type="text" placeholder="Enter Task..." class="todo-input" name="todo">

@@ -4,7 +4,6 @@ const todoButton = document.querySelector('.todo-button');
 const todoList = document.querySelector('.todo-list');
 const filterOption = document.querySelector('.filter-todo');
 const settingsButton = document.querySelector('.background-selector')
-
 //Event Listeners
 
 todoButton.addEventListener("click", addTodo);
@@ -174,33 +173,57 @@ function removeLocalCompleted(todo) {
 }
 
 function toggleSettings(){
-  if (settingsButton.style.visibility === "hidden"){
-    settingsButton.style.visibility = "visible";
-  }else {
+  if (settingsButton.style.visibility == "visible"){
     settingsButton.style.visibility = "hidden";
+  }else {
+    settingsButton.style.visibility = "visible";
   }
 }
 
 function setBackground(number){
   const body = document.body;
+  let backgroundColor;
   switch (number){
     case 1:
-      body.style.backgroundColor = 'pink';
+      backgroundColor = '#FFC0CB'; //pink
+      body.style.backgroundColor = backgroundColor;
+      body.style.backgroundImage = 'none';
       break;
     case 2:
-      body.style.backgroundColor = 'blue';
+      backgroundColor = '#40444B'; //grey
+      body.style.backgroundColor = backgroundColor;
+      body.style.backgroundImage = 'none';
       break;
     case 3:
-      body.style.backgroundColor = 'red';
+      backgroundColor = '#FF0000'; //red
+      body.style.backgroundColor = backgroundColor;
+      body.style.backgroundImage = 'none';
       break;
     case 4:
-      body.style.backgroundColor = 'yellow';
+      backgroundColor = '#FFFF00'; //yellow
+      body.style.backgroundColor = backgroundColor;
+      body.style.backgroundImage = 'none';
       break;
     case 5:
-      body.style.backgroundImage = url("https://wallpaperaccess.com/full/4225217.jpg")
-      default:
-    console.log('failed switch');
+      backgroundColor = '#e5e5f7'; //reset
+      body.style.backgroundColor = backgroundColor;
+      body.style.opacity = 0.8;
+      body.style.backgroundImage = 'radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px)';
+      break;
+    default:
+      console.log('failed switch');
+  }
+  const luminance = calculateLuminance(backgroundColor); //calculate if text should be white or black
+  const header =  document.querySelector('h1');
+  header.style.color = luminance > 0.5 ? 'black' : 'white';
+  toggleSettings();
+}
 
-    /// trying to   change background to hex normal? Maybe lets try
-  } 
+function calculateLuminance(color) {
+  const hex = color.replace('#', '');
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
 }
