@@ -198,7 +198,6 @@ form button:hover {
         max-height: 80px;
         align-items: center;
         padding-left: 10px;
-        min-height: 30vh;
     }
     
     .settings{
@@ -208,5 +207,27 @@ form button:hover {
     h1{
         position: sticky;
         padding-left: 80px;
+    }
+}
+
+@media (max-width: 425px) {
+    h1{
+        left: 0;
+        padding-left: 0;
+        font-size: 6vh;
+    }
+    .settings, .filter-todo{
+       display: none;
+    }
+    .background-selector{
+        margin-top: 50px;
+        margin-right: 5px;
+    }
+    form input{
+        max-width: 300px;
+    }
+    .todo-list, .todo{
+        min-width: 300px;
+        max-width: 340px;
     }
 }
