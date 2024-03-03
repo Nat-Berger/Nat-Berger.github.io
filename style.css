@@ -183,6 +183,14 @@ form button:hover {
     border-radius: 5px;
     cursor: pointer;
 }
+.version{
+    position: absolute;
+    font-size: small;
+    left: 0;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: row;    
+}
 
 @media all and (max-width: 620px){
     .filter-todo {
