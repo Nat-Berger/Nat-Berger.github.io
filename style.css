@@ -50,10 +50,9 @@ form button {
 }
 
 form button:hover {
-    font-size: 2.5rem;
     transition-duration: 0.3s;
     color: rgb(30, 243, 30);;
-    border-radius: 10px;
+    border-radius: 0px 10px 10px 0px;
 }
 
 .todo-container {
@@ -136,7 +135,7 @@ form button:hover {
     width: 120px;
     margin-left: 10px;
     border-radius: 4px;
-    height: 50px;
+    height: 46px;
 
 }
 
@@ -189,7 +188,8 @@ form button:hover {
     left: 0;
     padding-left: 10px;
     display: flex;
-    flex-direction: row;    
+    flex-direction: row;  
+    bottom: 0;  
 }
 
 @media all and (max-width: 620px){
